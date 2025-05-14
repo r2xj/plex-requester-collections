@@ -47,6 +47,8 @@ TAUTULLI_API_KEY=******************** # Optional
 FEATURE_RUN_ONCE=0 # Optional - 1:Run through once then stop. 0 (default): Repeat every 24h.
 FEATURE_CREATE_COLLECTIONS=1 # Optional - 1 (default): Make smart collection for each requester. 0: Just do the tagging.
 FEATURE_TAG_NOT_REQUESTED=1 # Optional - 1 (default): Tag items which were not requested in Overseerr as such.
+FEATURE_TAG_STALE_REQUEST=1 # Optional - 1 (default): Tag items older than 6 months that haven't been watched by anyone in last 3 months. 
+FEATURE_TAG_WATCHED=1 # Optional - 1 (default): Tag items the requester or someone else has watched. 
 START_DELAY_MS=0 # Optional - Number of milliseconds to wait before starting the first pass. Useful if you reboot all containers at the same time.
 ```
 
@@ -82,6 +84,8 @@ services:
       - FEATURE_RUN_ONCE=0 # Optional - 1:Run through once then stop. 0 (default): Repeat every 24h.
       - FEATURE_CREATE_COLLECTIONS=1 # Optional - 1 (default): Make smart collection for each requester. 0: Just do the tagging.
       - FEATURE_TAG_NOT_REQUESTED=1 # Optional - 1 (default): Tag items which were not requested in Overseerr as such.
+      - FEATURE_TAG_STALE_REQUEST=1 # Optional - 1 (default): Tag items older than 6 months and not watched by anyone in last 3 months. 
+      - FEATURE_TAG_WATCHED=1 # Optional - 1 (default): Tag items the requester or someone else has watched. 
       - START_DELAY_MS=0 # Optional - Number of milliseconds to wait before starting the first pass. Useful if you reboot all containers at the same time.
     restart: unless-stopped
 

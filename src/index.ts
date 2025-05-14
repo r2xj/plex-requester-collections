@@ -118,6 +118,7 @@ const app = async function () {
 			);
 
 			// No request object found for this media item, mark it as such.
+			// Feature flag to disable Not Requested tagging.
 			if (!request && process.env.FEATURE_TAG_NOT_REQUESTED !== "0") {
 				// Print to console.
 				console.log(`${mediaItem.title} - Not Requested`);
@@ -338,7 +339,9 @@ const app = async function () {
 						: 0;
 
 				// Have people other then the requester watched the item within the stale viewing threshold?
+				// Feature flag to disable watched tagging.
 				if (
+					process.env.FEATURE_TAG_WATCHED !== "0" &&
 					moment(lastWatchedDate_others) > STALE_VIEW_DATE_THRESHOLD
 				) {
 					radarrSonarrItem = await RadarrAPI.addTagToMediaItem(
@@ -371,7 +374,8 @@ const app = async function () {
 				);
 
 				// We have evidence that the requester has fully watched the media item.
-				if (watchedSession) {
+				// Feature flag to turn off tagging watched items
+				if (watchedSession && process.env.FEATURE_TAG_WATCHED !== "0") {
 					// Add the tag to the media item in Radarr indicating that the requester has watched the item.
 					radarrSonarrItem = await RadarrAPI.addTagToMediaItem(
 						radarrSonarrItem?.id,
@@ -397,7 +401,9 @@ const app = async function () {
 						: 0;
 
 				// If the media item was downloaded more than 6 months ago, and no one watched in the last 3 months, tag it as stale.
+				// Feature flag to disable tagging stale requests.
 				if (
+					process.env.FEATURE_TAG_STALE_REQUEST !== "0" &&
 					moment(mediaItem?.addedAt * 1000) <
 						STALE_ADDED_DATE_THRESHOLD &&
 					moment(lastWatchedDate_requester) <
@@ -484,6 +490,7 @@ const app = async function () {
 
 				// Have people other then the requester watched the item within the stale viewing threshold?
 				if (
+					process.env.FEATURE_TAG_WATCHED !== "0" &&
 					moment(lastWatchedDate_others) > STALE_VIEW_DATE_THRESHOLD
 				) {
 					radarrSonarrItem = await SonarrAPI.addTagToMediaItem(
@@ -521,7 +528,9 @@ const app = async function () {
 				);
 
 				// Has the user watched all the episodes, and have all the current episodes been downloaded?
+				// Feature flag to disable watched tagging
 				if (
+					process.env.FEATURE_TAG_WATCHED !== "0" &&
 					uniqueEpisodeHistories?.length ===
 						(<SonarrSeriesDetails>radarrSonarrItem)?.statistics
 							?.episodeCount &&
