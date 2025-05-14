@@ -46,6 +46,7 @@ TAUTULLI_URL=http://tautulli-ip-address:8181 # Optional
 TAUTULLI_API_KEY=******************** # Optional
 FEATURE_RUN_ONCE=0 # Optional - 1:Run through once then stop. 0 (default): Repeat every 24h.
 FEATURE_CREATE_COLLECTIONS=1 # Optional - 1 (default): Make smart collection for each requester. 0: Just do the tagging.
+FEATURE_TAG_NOT_REQUESTED=1 # Optional - 1 (default): Tag items which were not requested in Overseerr as such.
 START_DELAY_MS=0 # Optional - Number of milliseconds to wait before starting the first pass. Useful if you reboot all containers at the same time.
 ```
 
@@ -80,6 +81,7 @@ services:
       - TAUTULLI_API_KEY=******************** # Optional
       - FEATURE_RUN_ONCE=0 # Optional - 1:Run through once then stop. 0 (default): Repeat every 24h.
       - FEATURE_CREATE_COLLECTIONS=1 # Optional - 1 (default): Make smart collection for each requester. 0: Just do the tagging.
+      - FEATURE_TAG_NOT_REQUESTED=1 # Optional - 1 (default): Tag items which were not requested in Overseerr as such.
       - START_DELAY_MS=0 # Optional - Number of milliseconds to wait before starting the first pass. Useful if you reboot all containers at the same time.
     restart: unless-stopped
 

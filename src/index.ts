@@ -118,7 +118,7 @@ const app = async function () {
 			);
 
 			// No request object found for this media item, mark it as such.
-			if (!request) {
+			if (!request && process.env.FEATURE_TAG_NOT_REQUESTED !== "0") {
 				// Print to console.
 				console.log(`${mediaItem.title} - Not Requested`);
 
